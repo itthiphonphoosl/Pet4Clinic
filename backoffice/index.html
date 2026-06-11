@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet4Clinic</title>
+
+    <!-- AdminLTE CSS (CDN) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css"
+    />
+    <!-- Font Awesome (Icon) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <!-- Google Font -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- jQuery (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap 4 (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE JS (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/js/adminlte.min.js"></script>
+  </head>
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <a href="#"><b>Pet4Clinic</b></a>
+      </div>
+
+      <!-- Login card -->
+      <div class="card">
+        <div class="card-body login-card-body">
+          <p class="login-box-msg">Welcome to backoffice</p>
+
+          <form id="loginForm">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                id="username"
+                class="form-control"
+                placeholder="Username"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                placeholder="Password"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <button
+              type="submit"
+              id="loginBtn"
+              class="btn btn-primary btn-block"
+            >
+              Sign In
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript to call API and set cookie -->
+
+    <!-- Auth check -->
+    <script src="js/script.js"></script>
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          const formData = new FormData();
+          formData.append("u_username", username);
+          formData.append("u_password", password);
+          fetch("../services/user.php?action=login", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status == "success") {
+                setCookie("tokenAccess", data.token, 1);
+                setCookie("userInfo", JSON.stringify(data.data), 1);
+                window.location.href = "dashboard.html";
+              } else {
+                alert(data.message);
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("An error occurred. Please try again.");
+            });
+        });
+    </script>
+  </body>
+</html>

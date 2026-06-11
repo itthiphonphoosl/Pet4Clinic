@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>veterinary4Care</title>
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+    <!-- jQuery -->
+    <script src="https://adminlte.io/themes/v3/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="https://adminlte.io/themes/v3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="https://adminlte.io/themes/v3/dist/js/adminlte.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+
+</head>
+
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-link">
+                <img id="logo-backoffice" src="https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+                    class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light">veterinary4Care</span>
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+              <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                  <a href="#" class="d-block">
+                    <div id="sys_name"></div>
+                  </a>
+                </div>
+              </div>
+              <nav class="mt-2" id="sys_menu"></nav>
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 mt-3">
+                            <h2 id="header"></h2>
+
+                            <form id="submitForm" enctype="multipart/form-data">
+                                <div class="card-body">
+                                    <div class="form-group" id="form_u_id">
+                                        <label for="id">รหัสสัตวแพทย์</label>
+                                        <input type="text" class="form-control" id="u_id" placeholder="รหัสสัตวแพทย์" value=""
+                                            disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id">ยูเซอร์เนม</label>
+                                        <input type="text" class="form-control" id="u_username" placeholder="ยูเซอร์เนม" value=""
+                                             />
+                                    </div>
+                                    <div class="form-group" id="form_u_password">
+                                        <label for="id">รหัสผ่าน</label>
+                                        <input type="password" class="form-control" id="u_password" placeholder="รหัสผ่าน" value="" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">ชื่อสัตวแพทย์</label>
+                                        <input type="text" class="form-control" id="u_name" placeholder="ชื่อสัตวแพทย์"
+                                            required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">เบอร์ติดต่อ</label>
+                                        <input type="text" class="form-control" id="u_phone" placeholder="เบอร์ติดต่อ"
+                                            required />
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>สถานะ</label>
+                                        <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="active" value="1" checked />
+                                        <label class="form-check-label" for="active">
+                                            ใช้งาน
+                                        </label>
+                                        </div>
+                                        <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="inactive" value="0" />
+                                        <label class="form-check-label" for="inactive">
+                                            ไม่ใช้งาน
+                                        </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                                        <button type="button" class="btn btn-secondary" onclick="history.back()">
+                                            ยกเลิก
+                                        </button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-inline">veterinary4Care</div>
+            <strong>Copyright &copy; 2024</strong> All rights reserved.
+        </footer>
+    </div>
+
+    <!-- Auth check -->
+    <script src="js/script.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadData();
+        });
+
+        function setStatus(isActive) {
+            if (isActive) {
+                document.getElementById("active").checked = true;
+            } else {
+                document.getElementById("inactive").checked = true;
+            }
+        }
+
+        document.getElementById("submitForm").addEventListener("submit", function (e) {
+            e.preventDefault(); // ป้องกันการส่งฟอร์มแบบดั้งเดิม
+
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const action = urlParams.get("action");
+            const id = urlParams.get("id");
+
+            // รวบรวมข้อมูลฟอร์ม
+            const u_name = document.getElementById("u_name").value;
+            const u_phone = document.getElementById("u_phone").value;
+            const status = document.querySelector('input[name="status"]:checked').value;
+
+            // สร้าง FormData สำหรับการส่งข้อมูล
+            const formData = new FormData();
+            formData.append("u_name", u_name);
+            formData.append("u_phone", u_phone);
+            formData.append("u_active", status);
+            
+            if (action == "edit") {
+                formData.append("u_id", id);
+            } else {
+                formData.append("u_type", 'vet');
+                const u_username = document.getElementById("u_username").value;
+                formData.append("u_username", u_username);
+                const u_password = document.getElementById("u_password").value;
+                formData.append("u_password", u_password);
+            }
+
+            // จัดการส่งข้อมูลผ่าน API
+            fetch(
+                '../services/user.php?action='+action,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: checkAuthorization(), // ตรวจสอบ Authorization การเข้าถึง API
+                    },
+                    body: formData, // ใช้ FormData ที่สร้าง
+                }
+            )
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.status == "success") {
+                        alert(data.message);
+                        window.location.href = "veterinary.html"; 
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    alert("An error occurred. Please try again.");
+                });
+        });
+
+
+        function loadData() {
+
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const action = urlParams.get("action");
+            const id = urlParams.get("id");
+
+            if (action) {
+                if (action == "add") {
+                    document.getElementById("header").innerText = "เพิ่มข้อมูลสัตวแพทย์";
+                    document.getElementById("form_u_id").style.display = "none";
+                    document.getElementById("form_u_password").style.display = "block";
+                } else if (action == "edit" && id > 0) {
+                    document.getElementById("header").innerText = "แก้ไขข้อมูลสัตวแพทย์";
+                    document.getElementById("form_u_id").style.display = "block";
+                    document.getElementById("form_u_password").style.display = "none";
+
+                    fetch(
+                        "../services/user.php?u_id=" + id,
+                        {
+                            method: "GET",
+                            headers: {
+                                Authorization: checkAuthorization(),
+                            },
+                        }
+                    )
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error(
+                                    "Network response was not ok " + response.statusText
+                                );
+                            }
+                            return response.json();
+                        })
+                        .then((data) => {
+                            if (data.status == "success") {
+
+                                document.getElementById("u_id").value = data.data.u_id;
+                                document.getElementById("u_username").value = data.data.u_username;
+                                document.getElementById("u_username").disabled = true;
+                                document.getElementById("u_name").value = data.data.u_name;
+                                document.getElementById("u_phone").value = data.data.u_phone;
+                                
+                                setStatus(data.data.u_active == "1");
+
+                            } else {
+                                alert(data.message);
+                                window.location.href = "veterinary.html";
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error);
+                            alert("An error occurred. Please try again.");
+                            window.location.href = "veterinary.html";
+                        });
+                } else {
+                    window.location.href = "index.html";
+                }
+            } else {
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+</body>
+
+</html>
