@@ -1,4 +1,4 @@
 <?php
-header("Location: https://softdemohub.online/Pet4Clinic/backoffice/index.html");
+header("Location: http://itthiphon-psl.infinityfreeapp.com/Pet4Clinic/backoffice/index.html");
 exit();
 ?>
